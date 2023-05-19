@@ -1,7 +1,9 @@
 import boto3
 
 class cfnReader:
-    def __init__(self, StackName):
+    def __init__(self, StackName=''):
+        if StackName == '':
+            raise ValueError("Stackname not specified")
         self.stackname = StackName
 
     def list_stoppable_resources(self,StackName="",filterstatus='running'):

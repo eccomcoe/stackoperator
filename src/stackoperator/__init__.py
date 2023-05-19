@@ -67,6 +67,32 @@ def stop_tfstack():
     operator = batchOperator()
     operator.batch_stop_resources(ec2_list,rds_list,asg_list)
 
+def start_resourcegroup():
+    # 创建 ArgumentParser 对象
+    parser = argparse.ArgumentParser(description='Start all startable resources in a Resource Group.')
+    parser.add_argument('--groupname', help='Resource Group name.', dest='GroupName')
+    args = parser.parse_args()
+
+    factory = readerFactory()
+    reader = factory.create_reader('rsg',args.GroupName)
+    ec2_list,rds_list,asg_list = reader.list_stoppable_resources(filterstatus='stopped')
+
+    operator = batchOperator()
+    operator.batch_start_resources(ec2_list,rds_list,asg_list)
+
+def stop_resourcegroup():
+    # 创建 ArgumentParser 对象
+    parser = argparse.ArgumentParser(description='Stop all startable resources in a Resource Group.')
+    parser.add_argument('--groupname', help='Resource Group name.', dest='GroupName')
+    args = parser.parse_args()
+
+    factory = readerFactory()
+    reader = factory.create_reader('rsg',args.GroupName)
+    ec2_list,rds_list,asg_list = reader.list_stoppable_resources()
+
+    operator = batchOperator()
+    operator.batch_stop_resources(ec2_list,rds_list,asg_list)
+
 def tag_cfnstack():
     # 创建 ArgumentParser 对象
     parser = argparse.ArgumentParser(description='Tag all stoppable resources in CloudFormation stack.')
@@ -89,6 +115,20 @@ def tag_tfstack():
     args = parser.parse_args()
     factory = readerFactory()
     reader = factory.create_reader('tf',args.StateFile)
+    ec2_list,rds_list,asg_list = reader.list_stoppable_resources(filterstatus='both')
+
+    operator = batchOperator()
+    operator.batch_tag_resources(ec2_list,rds_list,asg_list,parse_tags(args.Tags))
+
+def tag_resourcegroup():
+    # 创建 ArgumentParser 对象
+    parser = argparse.ArgumentParser(description='Tag all stoppable resources in Resource Group.')
+    parser.add_argument('--groupname', help='Resource Group name.', dest='GroupName')
+    parser.add_argument('--tags', dest='Tags', help='Tags to apply to resources. Format: key1=value1,key2=value2')
+    args = parser.parse_args()
+
+    factory = readerFactory()
+    reader = factory.create_reader('rsg',args.GroupName)
     ec2_list,rds_list,asg_list = reader.list_stoppable_resources(filterstatus='both')
 
     operator = batchOperator()

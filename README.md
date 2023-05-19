@@ -1,10 +1,11 @@
 A small utility to help do start, stop and tag actions in an IaC stack for cost optimization purpose.  
-Stackoperator now support CloudFormation and Terraform stack.  
+Stackoperator now support CloudFormation,Terraform stack,as well Resource Group.  
 It's a great idea to use stackoperator with [Instance Scheduler on AWS](https://aws.amazon.com/solutions/implementations/instance-scheduler-on-aws) solution by tagging stoppable resources created by IaC stack.  
 
 ## Use cases:
 - During the POC testing process of solutions deployed using CloudFormation or Terraform, toggle related resources with one click to save testing costs.
 - For solutions deployed using CloudFormation or Terraform, save operation costs by tagging toggleable resources and controlling their runtime using the Instance Scheduler on AWS solution.
+- Batch Start,Stop and Tag toggleable resources in a resource group.
 
 ## Prerequisites:
 Before using stackoperator script, please make sure correct AWS credential in envs, using [aws-vault](https://github.com/99designs/aws-vault) to store and switch AWS credentials is recommend.
@@ -43,4 +44,16 @@ stoptfstack [--statefile <Terraform_Stack_StateFile>]
 ### Tag stoppable running resources in Terraform Stack (at current path)
 ```
 tagtfstack --tags "Key1=Value1,Key2=Value2" [--statefile <Terraform_Stack_StateFile>]  
+```
+### Start stopped resources in Resrouce Group
+```
+startresourcegroup --groupname <Resource_Group_Name>   
+```
+### Stop stoppable running resources in Resource Group
+```
+startresourcegroup --groupname <Resource_Group_Name>    
+```
+### Tag stoppable running resources in Resource Group
+```
+tagresourcegroup --tags "Key1=Value1,Key2=Value2" --groupname <Resource_Group_Name>
 ```

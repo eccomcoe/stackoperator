@@ -96,7 +96,9 @@ class batchOperator:
 
         print("All startable resources within the CloudFormation stack have been started.")
 
-    def batch_tag_resources(self,ec2,rds,asg,tags):
+    def batch_tag_resources(self,ec2,rds,asg,tags=''):
+        if tags == '':
+            raise ValueError("Tags not specified")
         ec2_client = boto3.client('ec2')
         rds_client = boto3.client('rds')
         

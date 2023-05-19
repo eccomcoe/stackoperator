@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stackoperator"
-version = "0.1.1"
+version = "0.2.0"
 authors = [
     {name = "Henry Huo", email = "happy78@live.com"},
 ]
@@ -23,7 +23,10 @@ classifiers = [
 [project.scripts]
 startcfnstack = "stackoperator:start_cfnstack"
 stopcfnstack = "stackoperator:stop_cfnstack"
+tagcfnstack = "stackoperator:tag_cfnstack"
 starttfstack = "stackoperator:start_tfstack"
 stoptfstack = "stackoperator:stop_tfstack"
-tagcfnstack = "stackoperator:tag_cfnstack"
 tagtfstack = "stackoperator:tag_tfstack"
+startresourcegroup = "stackoperator:start_resourcegroup"
+stopresourcegroup = "stackoperator:stop_resourcegroup"
+tagresourcegroup = "stackoperator:tag_resourcegroup"
